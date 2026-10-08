@@ -1,1 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Claude Developer Project — an open-source project exploring practical AI-assisted development workflows." />
+  <meta name="theme-color" content="#11100e" />
+  <title>Claude Developer Project | Open Source</title>
 
+  <style>
+    :root{
+      --bg:#fbfaf7;
+      --ink:#171513;
+      --muted:#6f6a63;
+      --card:#ffffff;
+      --line:#e8e2da;
+      --accent:#d97745;
+      --accent-dark:#b85d30;
+      --dark:#171513;
+      --dark-2:#25211d;
+      --green:#2f7d5a;
+      --shadow:0 18px 55px rgba(23,21,19,.10);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(251,250,247,.88);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(232,226,218,.8);
+    }
+    .nav-inner{
+      height:72px;display:flex;align-items:center;justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      display:grid;place-items:center;color:white;font-weight:900;
+      background:linear-gradient(135deg,var(--accent),#e9a16e);
+      box-shadow:0 8px 20px rgba(217,119,69,.25);
+    }
+    .links{display:flex;gap:25px;color:#514c46;font-size:14px}
+    .links a:hover{color:var(--accent)}
+    .nav-btn{
+      background:var(--dark);color:#fff;padding:10px 17px;border-radius:12px;
+      font-size:14px;font-weight:700;
+    }
+
+    .hero{padding:100px 0 85px;overflow:hidden;position:relative}
+    .hero:before{
+      content:"";position:absolute;width:500px;height:500px;border-radius:50%;
+      right:-220px;top:-180px;background:rgba(217,119,69,.09);filter:blur(10px);
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;padding:7px 12px;
+      border:1px solid var(--line);border-radius:999px;background:#fff;
+      color:#5f5952;font-size:13px;font-weight:700;margin-bottom:22px;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+    h1{
+      max-width:850px;font-size:clamp(44px,7vw,78px);
+      line-height:1.02;letter-spacing:-3px;margin-bottom:24px;
+    }
+    .hero p{
+      max-width:690px;color:var(--muted);font-size:20px;line-height:1.7;
+    }
+    .actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:34px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:14px 20px;border-radius:14px;font-weight:800;
+      border:1px solid var(--line);transition:.2s;
+    }
+    .btn-primary{background:var(--dark);color:#fff;border-color:var(--dark)}
+    .btn-primary:hover{transform:translateY(-2px);background:#2a2622}
+    .btn-secondary{background:#fff}
+    .btn-secondary:hover{border-color:#cfc6bb;transform:translateY(-2px)}
+
+    .trust{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:65px;
+    }
+    .mini{
+      background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;
+    }
+    .mini strong{display:block;font-size:25px;margin-bottom:3px}
+    .mini span{color:var(--muted);font-size:14px}
+
+    section{padding:85px 0}
+    .section-head{max-width:700px;margin-bottom:38px}
+    .section-head h2{font-size:clamp(32px,5vw,48px);line-height:1.1;letter-spacing:-1.5px;margin-bottom:14px}
+    .section-head p{color:var(--muted);font-size:17px}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      padding:30px;box-shadow:0 7px 25px rgba(23,21,19,.04);
+    }
+    .icon{
+      width:48px;height:48px;border-radius:15px;background:#fff3eb;
+      display:grid;place-items:center;font-size:23px;margin-bottom:20px;
+    }
+    .card h3{font-size:21px;margin-bottom:9px}
+    .card p{color:var(--muted);font-size:15px}
+
+    .dark-section{
+      background:var(--dark);color:#fff;border-radius:34px;
+      margin:20px auto;width:min(1120px,92%);
+    }
+    .dark-section .section-head p{color:#bdb6ae}
+    .dark-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:22px}
+    .use-box{
+      border:1px solid #39332e;background:var(--dark-2);border-radius:22px;padding:28px;
+    }
+    .use-box h3{margin-bottom:12px;font-size:20px}
+    .use-box ul{padding-left:20px;color:#c7c0b8}
+    .use-box li{margin:8px 0}
+
+    .cta{
+      background:linear-gradient(135deg,#fff1e8,#fffaf6);
+      border:1px solid var(--line);border-radius:30px;padding:50px;
+      display:flex;align-items:center;justify-content:space-between;gap:30px;
+    }
+    .cta h2{font-size:38px;line-height:1.1;margin-bottom:10px}
+    .cta p{color:var(--muted);max-width:650px}
+
+    footer{
+      border-top:1px solid var(--line);padding:35px 0;color:var(--muted);font-size:14px;
+    }
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .small-links{display:flex;gap:18px}
+    .small-links a:hover{color:var(--accent)}
+
+    @media(max-width:800px){
+      .links{display:none}
+      .hero{padding:70px 0 60px}
+      h1{letter-spacing:-2px}
+      .hero p{font-size:17px}
+      .trust,.grid,.dark-grid{grid-template-columns:1fr}
+      section{padding:65px 0}
+      .cta{padding:32px;display:block}
+      .cta .actions{margin-top:25px}
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="brand" href="#top">
+        <span class="logo">C</span>
+        <span>Claude Project</span>
+      </a>
+
+      <div class="links">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#use">Development</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <a class="nav-btn" href="https://github.com/sidtech366/Claude" target="_blank" rel="noopener">
+        GitHub ↗
+      </a>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <header class="hero">
+      <div class="container">
+        <div class="eyebrow"><span class="dot"></span> Open-source developer project</div>
+
+        <h1>Building practical AI-powered software, one feature at a time.</h1>
+
+        <p>
+          Claude Project is an independent open-source development project focused on
+          experimenting with practical AI-assisted workflows, software development,
+          automation, and useful tools for real-world applications.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/sidtech366/Claude" target="_blank" rel="noopener">
+            View on GitHub →
+          </a>
+          <a class="btn btn-secondary" href="#about">
+            Explore Project
+          </a>
+        </div>
+
+        <div class="trust">
+          <div class="mini">
+            <strong>Open Source</strong>
+            <span>Public development on GitHub</span>
+          </div>
+          <div class="mini">
+            <strong>AI-Assisted</strong>
+            <span>Designed around modern AI workflows</span>
+          </div>
+          <div class="mini">
+            <strong>Developer Focus</strong>
+            <span>Built to accelerate practical software work</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2>About the project</h2>
+          <p>
+            The project is being developed as an open-source space for building,
+            testing, and improving AI-assisted developer experiences.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="icon">⚡</div>
+            <h3>Faster Development</h3>
+            <p>
+              Explore AI-assisted coding, debugging, planning, documentation,
+              and feature development to reduce repetitive development work.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🧩</div>
+            <h3>Practical Tools</h3>
+            <p>
+              Focus on useful software capabilities that can be applied to
+              real projects rather than only experimental demonstrations.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🌍</div>
+            <h3>Open Development</h3>
+            <p>
+              The project is publicly hosted on GitHub so development,
+              improvements, and future contributions can happen transparently.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="dark-section" id="use">
+      <section>
+        <div class="container">
+          <div class="section-head">
+            <h2>How AI can accelerate the project</h2>
+            <p>
+              AI assistance can be used throughout the software-development
+              lifecycle while keeping the project source and decisions under developer control.
+            </p>
+          </div>
+
+          <div class="dark-grid">
+            <div class="use-box">
+              <h3>Development workflow</h3>
+              <ul>
+                <li>Architecture and implementation planning</li>
+                <li>Code generation and refactoring</li>
+                <li>Bug investigation and debugging</li>
+                <li>Testing and quality improvements</li>
+                <li>Technical documentation</li>
+              </ul>
+            </div>
+
+            <div class="use-box">
+              <h3>Future direction</h3>
+              <ul>
+                <li>More developer automation</li>
+                <li>Improved AI-assisted workflows</li>
+                <li>Better project documentation</li>
+                <li>Community-driven improvements</li>
+                <li>Real-world AI integrations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Built with an open-source mindset.</h2>
+          <p>
+            The project is intended to grow through continuous development,
+            experimentation, documentation, and feedback.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="icon">💻</div>
+            <h3>Developer Friendly</h3>
+            <p>Simple web-first presentation with a lightweight structure suitable for GitHub Pages.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🔬</div>
+            <h3>Experiment & Improve</h3>
+            <p>New ideas can be tested quickly and refined based on practical results and feedback.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🔓</div>
+            <h3>Transparent</h3>
+            <p>Public source code makes it possible for others to inspect, learn from, and contribute to the work.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>Follow the project on GitHub.</h2>
+            <p>
+              See the source code, development history, issues, and future improvements
+              in the public repository.
+            </p>
+          </div>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="https://github.com/sidtech366/Claude" target="_blank" rel="noopener">
+              Open Repository ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 Claude Project · Open-source developer project</div>
+      <div class="small-links">
+        <a href="https://github.com/sidtech366/Claude" target="_blank" rel="noopener">GitHub</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
